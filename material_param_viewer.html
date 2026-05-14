@@ -242,22 +242,7 @@
         .btn-quick-nav:active {
             background-color: #e1e4e8;
         }
-        /* 白屏遮罩动画 */
-        .white-flash-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ffffff;
-            opacity: 0;
-            pointer-events: none;
-            z-index: 500;
-            transition: opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .white-flash-overlay.active {
-            opacity: 0.5;
-        }
+
         /* 顶部提示动画 */
         .toast-container {
             position: fixed;
@@ -507,8 +492,7 @@
 
         <!-- 中间主内容区域 -->
         <div class="center-panel" id="center-panel">
-            <!-- 白屏遮罩 -->
-            <div class="white-flash-overlay" id="white-flash"></div>
+
 
             <div class="center-panel-inner">
                 <!-- 报告内容 -->
@@ -873,14 +857,7 @@
         }, 2000);
     }
 
-    // ==================== 白屏动画 ====================
-    function triggerWhiteFlash() {
-        const overlay = document.getElementById('white-flash');
-        overlay.classList.add('active');
-        setTimeout(() => {
-            overlay.classList.remove('active');
-        }, 150);
-    }
+
 
     // ==================== 复制功能 ====================
     async function copyParamName(name, btnElement) {
@@ -1021,8 +998,6 @@
     function doGenerate(inputText, fromClipboard) {
         lastInputText = inputText;
         lastFromClipboard = fromClipboard;
-        triggerWhiteFlash();
-
         const parameters = extractMaterialParameters(inputText);
         const now = new Date().toLocaleString(currentLang === 'zh' ? 'zh-CN' : 'en-US');
 
