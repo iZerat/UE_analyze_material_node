@@ -181,6 +181,13 @@
         .btn-from-input:active {
             background-color: #044289;
         }
+        /* 装饰线 */
+        .divider {
+            height: 1px;
+            background-color: #e1e4e8;
+            margin: 8px 0;
+        }
+
         /* 快速跳转按钮 */
         .quick-nav-section {
             margin-top: auto;
@@ -319,8 +326,8 @@
         .param-header {
             display: flex;
             align-items: center;
-            justify-content: space-between;
             margin-bottom: 8px;
+            gap: 12px;
         }
         .param-name {
             font-weight: 600;
@@ -456,11 +463,17 @@
                 <button class="btn-from-input" onclick="generateFromInput()">从输入栏中重新生成</button>
             </div>
 
+            <!-- 装饰线1 -->
+            <div class="divider hidden" id="divider-1"></div>
+
             <!-- 生成日期 -->
             <div class="right-panel-section hidden" id="date-section">
                 <div class="right-panel-label">生成日期</div>
                 <div class="generate-date" id="generate-date">--</div>
             </div>
+
+            <!-- 装饰线2 -->
+            <div class="divider hidden" id="divider-2"></div>
 
             <!-- 参数统计表格 -->
             <div class="right-panel-section hidden" id="stats-section">
@@ -895,7 +908,9 @@
 
         // 更新右侧面板
         document.getElementById('generate-date').textContent = now;
+        document.getElementById('divider-1').classList.remove('hidden');
         document.getElementById('date-section').classList.remove('hidden');
+        document.getElementById('divider-2').classList.remove('hidden');
 
         // 更新右侧统计表格
         const rightTableBody = document.querySelector('#right-stats-table tbody');
