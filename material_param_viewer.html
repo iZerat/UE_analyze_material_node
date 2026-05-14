@@ -377,7 +377,7 @@
             border: 1px solid #d0d7de;
             border-radius: 4px;
             cursor: pointer;
-            transition: all 0.15s;
+            transition: background-color 0.15s, color 0.15s, border-color 0.15s;
             flex-shrink: 0;
             width: 100px;
             text-align: center;
@@ -398,6 +398,7 @@
             display: flex;
             gap: 8px;
             align-items: center;
+            font-size: 1rem;
         }
         .btn-group-action {
             padding: 4px 12px;
@@ -408,11 +409,10 @@
             border: 1px solid #d0d7de;
             border-radius: 4px;
             cursor: pointer;
-            transition: all 0.15s;
+            transition: background-color 0.15s, color 0.15s, border-color 0.15s;
             flex-shrink: 0;
-            width: 100px;
+            width: auto;
             text-align: center;
-            white-space: nowrap;
         }
         .btn-group-action.copied {
             background-color: #2da44e;
@@ -476,6 +476,7 @@
             display: none;
         }
     </style>
+<base target="_blank">
 <base target="_blank">
 </head>
 <body>
@@ -644,6 +645,10 @@
         currentLang = currentLang === 'zh' ? 'en' : 'zh';
         document.getElementById('lang-toggle').textContent = currentLang === 'zh' ? 'EN' : '中';
         applyLanguage();
+        // 如果有已生成的报告，重新生成以应用新语言
+        if (lastInputText) {
+            doGenerate(lastInputText, lastFromClipboard);
+        }
     }
 
     function t(key) {
@@ -663,6 +668,10 @@
             textarea.placeholder = i18n[currentLang].placeholder;
         }
     }
+
+    // ==================== 全局状态 ====================
+    let lastInputText = '';
+    let lastFromClipboard = false;
 
     // ==================== 提取逻辑 ====================
     function extractMaterialParameters(inputText) {
@@ -995,6 +1004,8 @@
     }
 
     function doGenerate(inputText, fromClipboard) {
+        lastInputText = inputText;
+        lastFromClipboard = fromClipboard;
         triggerWhiteFlash();
 
         const parameters = extractMaterialParameters(inputText);
@@ -1059,10 +1070,20 @@
         }
         document.getElementById('toc-list').innerHTML = tocHtml;
 
+        // 提取材质名称
+        let materialName = '';
+        const materialMatch = inputText.match(/Material="[^"]*\.([A-Za-z0-9_]+)'/);
+        if (materialMatch) {
+            materialName = materialMatch[1];
+        }
+
         // 构建报告内容
         let reportHtml = '';
 
-        reportHtml += `<h1>${t('reportTitle')}</h1>`;
+        const titleText = materialName 
+            ? `${materialName} ${t('materialParamReport')}` 
+            : t('reportTitle');
+        reportHtml += `<h1>${escapeHtml(titleText)}</h1>`;
 
         for (const groupName of sortedGroups) {
             const anchor = makeAnchor(groupName);
