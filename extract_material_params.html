@@ -475,6 +475,7 @@
     </style>
 <base target="_blank">
 <base target="_blank">
+<base target="_blank">
 </head>
 <body>
     <!-- 顶部提示 -->
@@ -573,9 +574,9 @@
             copyGroupName: '复制分组名',
             locateInToc: '在目录中定位',
             total: '总计',
-            generatedFrom: 'generated from',
-            generatedSuccess: 'successfully! Total',
-            params: 'parameters',
+            generatedFrom: '已从',
+            generatedSuccess: '生成成功！共计',
+            params: '个参数',
             clipboardEmpty: '剪贴板为空',
             clipboardError: '无法读取剪贴板，请确保已授予网页剪贴板权限',
             inputEmpty: '输入栏为空，请先粘贴内容',
@@ -1166,7 +1167,11 @@
 
         if (!suppressToast) {
             const source = fromClipboard ? (currentLang === 'zh' ? '剪贴板' : 'clipboard') : (currentLang === 'zh' ? '输入栏' : 'input field');
-            showToast(`${t('generatedFrom')} ${source} ${t('generatedSuccess')} ${totalCount} ${t('params')}`);
+            if (currentLang === 'zh') {
+                showToast(`${t('generatedFrom')}${source}${t('generatedSuccess')}${totalCount}${t('params')}`);
+            } else {
+                showToast(`${t('generatedFrom')} ${source} ${t('generatedSuccess')} ${totalCount} ${t('params')}`);
+            }
         }
     }
 
