@@ -365,8 +365,10 @@
             cursor: pointer;
             transition: background-color 0.15s, color 0.15s, border-color 0.15s;
             flex-shrink: 0;
-            width: 100px;
+            width: fit-content;
+            min-width: 100px;
             text-align: center;
+            white-space: nowrap;
         }
         .btn-copy:hover {
             background-color: #d0d7de;
@@ -410,10 +412,10 @@
             cursor: pointer;
             transition: background-color 0.15s, color 0.15s, border-color 0.15s;
             flex-shrink: 0;
-            width: 110px;
+            width: fit-content;
+            min-width: 110px;
             text-align: center;
             white-space: nowrap;
-            overflow: hidden;
         }
         .btn-group-action.copied {
             background-color: #2da44e;
@@ -618,9 +620,9 @@
             count: 'Count',
             toTop: 'To Top',
             toBottom: 'To Bottom',
-            copyParamName: 'Copy Name',
+            copyParamName: 'Copy Parameter Name',
             copied: 'Copied',
-            copyGroupName: 'Copy Group',
+            copyGroupName: 'Copy Group Name',
             locateInToc: 'Locate in TOC',
             total: 'Total',
             generatedFrom: 'Generated from',
