@@ -311,6 +311,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
+            position: relative;
         }
         h2.highlight-scroll {
             background-color: rgba(9, 105, 218, 0.12);
@@ -389,6 +390,14 @@
             gap: 8px;
             align-items: center;
             font-size: 1rem;
+        }
+        .group-info {
+            font-size: 0.95em;
+            font-weight: 500;
+            color: #57606a;
+            margin-bottom: 12px;
+            margin-top: -8px;
+            padding-left: 8px;
         }
         .btn-group-action {
             padding: 4px 12px;
@@ -593,7 +602,7 @@
             curveRes: '曲线资源',
             paramCollection: '参数集',
             sortPriority: '排序优先级',
-            ungrouped: '未分组 (None)',
+            ungrouped: '未分组',
             other: 'Other'
         },
         en: {
@@ -632,7 +641,7 @@
             curveRes: 'Curve Resource',
             paramCollection: 'Collection',
             sortPriority: 'Sort Priority',
-            ungrouped: 'Ungrouped (None)',
+            ungrouped: 'Ungrouped',
             other: 'Other'
         }
     };
@@ -994,7 +1003,7 @@
         lastInputText = inputText;
         lastFromClipboard = fromClipboard;
         const parameters = extractMaterialParameters(inputText);
-        const now = new Date().toLocaleString(currentLang === 'zh' ? 'zh-CN' : 'en-US');
+        const now = new Date().toLocaleString('zh-CN', { hour12: false }).replace(/\//g, '/');
 
         const typeCounts = {};
         for (const p of parameters) {
@@ -1072,11 +1081,20 @@
 
         for (const groupName of sortedGroups) {
             const anchor = makeAnchor(groupName);
+            const groupParamCount = groups[groupName].length;
+            const isUngrouped = groupName === t('ungrouped');
             reportHtml += `<h2 id="${anchor}">${escapeHtml(groupName)}`;
             reportHtml += `<span class="group-actions">`;
-            reportHtml += `<button class="btn-group-action" onclick="copyGroupName('${escapeHtml(groupName)}', this)">${t('copyGroupName')}</button>`;
+            if (!isUngrouped) {
+                reportHtml += `<button class="btn-group-action" onclick="copyGroupName('${escapeHtml(groupName)}', this)">${t('copyGroupName')}</button>`;
+            }
             reportHtml += `<button class="btn-group-action" onclick="locateInToc('${anchor}')">${t('locateInToc')}</button>`;
             reportHtml += `</span></h2>`;
+            if (isUngrouped) {
+                reportHtml += `<div class="group-info">${currentLang === 'zh' ? '有 ' : ''}${groupParamCount}${currentLang === 'zh' ? ' 个参数未分组' : ' ungrouped parameters'}</div>`;
+            } else {
+                reportHtml += `<div class="group-info">${currentLang === 'zh' ? '分组包括 ' : 'Group includes '}${groupParamCount}${currentLang === 'zh' ? ' 个参数' : ' parameters'}</div>`;
+            }
 
             for (const param of groups[groupName]) {
                 reportHtml += `<div class="param-block">`;
