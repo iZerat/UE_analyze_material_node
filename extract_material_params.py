@@ -271,7 +271,7 @@ def write_output_txt(parameters, output_file, input_filename, material_name):
         f.write("=" * 80 + "\n")
         f.write(f"{report_title}\n")
         f.write(f"源文件: {input_filename}\n")
-        f.write(f"提取时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+        f.write(f"生成日期: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
         f.write("=" * 80 + "\n\n")
 
         # 统计信息（前置）
@@ -373,7 +373,7 @@ def write_output_md(parameters, output_file, input_filename, material_name):
     md_lines = []
     md_lines.append(f"# {report_title}")
     md_lines.append("")
-    md_lines.append(f"> **源文件**: `{input_filename}` &nbsp;&nbsp;&nbsp;&nbsp;**提取时间**: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    md_lines.append(f"> **源文件**: `{input_filename}` &nbsp;&nbsp;&nbsp;&nbsp;**生成日期**: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     md_lines.append("")
     md_lines.append("## 参数统计")
     md_lines.append("")
@@ -697,7 +697,7 @@ def write_output_html(parameters, output_file, input_filename, material_name):
     html_lines.append('    <div class="center-panel" id="center-panel">')
     html_lines.append('        <div class="center-panel-inner">')
 
-    # 标题（中间区域不再放源文件和提取时间）
+    # 标题（中间区域不再放源文件和生成日期）
     html_lines.append(f'<h1>{html_module.escape(report_title)}</h1>')
 
     # 各组详情
