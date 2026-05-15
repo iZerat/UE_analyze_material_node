@@ -1,6 +1,63 @@
-## Online Preview
+# Extract Material Params
 
-[Click to extract_material_paramsl_tool.html](https://iZerat.github.io/extract_material_params/extract_material_params.html)
+虚幻引擎材质参数提取与可视化工具，支持从虚幻材质 `.txt` 导出文件中提取参数信息，生成结构化的统计报告。
 
-## Screenshot
+## 功能特性
+
+- **参数提取**：自动识别 Scalar、Vector4、Texture2D、StaticSwitch、Curve、CollectionParameter 等材质参数类型
+- **分组展示**：按材质参数分组（Group）组织，未分组参数单独归类
+- **参数统计**：实时统计各类型参数数量，总计一目了然
+- **中英双语**：支持中文 / English 一键切换
+- **一键复制**：支持复制参数名、分组名到剪贴板
+- **目录导航**：左侧目录栏支持点击跳转，自动高亮当前位置
+- **响应式布局**：目录宽度自适应最长分组名，内容区域自动填充
+- **剪贴板读取**：支持直接从剪贴板粘贴虚幻材质文本并生成报告（需通过本地服务器访问）
+
+## 文件说明
+
+| 文件 | 说明 |
+|------|------|
+| `extract_material_params.html` | **主文件**，浏览器打开即可使用，纯前端实现，无需后端 |
+| `extract_material_params.py` | Python 脚本版，支持批量处理 `.txt` 文件，输出 TXT / Markdown / HTML 三种格式 |
+| `start_server.bat` | Windows 批处理脚本，一键启动本地 HTTP 服务器（解决浏览器剪贴板权限问题） |
+
+## 使用方法
+
+### 方法一：浏览器直接打开（推荐日常使用）
+
+1. 双击打开 `extract_material_params.html`
+2. 在虚幻引擎中，选中材质资产 → 右键 → **复制材质节点到剪贴板**（或导出为 `.txt`）
+3. 将文本粘贴到右侧「操作面板」的输入框中
+4. 点击 **从输入栏中重新生成**，即可查看报告
+
+> ⚠️ 直接双击打开（`file://` 协议）时，「粘贴并重新生成」按钮因浏览器安全限制无法自动读取剪贴板，需手动粘贴。
+
+### 方法二：本地服务器启动（解锁剪贴板自动读取）
+
+1. 确保已安装 Python 3
+2. 双击运行 `start_server.bat`
+3. 脚本会自动打开浏览器访问 `http://localhost:8080/extract_material_params.html`
+4. 点击 **粘贴并重新生成**，首次允许剪贴板权限后，后续不再弹窗
+
+> 💡 终端窗口即为服务器进程，使用期间请勿关闭。用完后关闭浏览器标签页，再关闭终端即可。
+
+### 方法三：Python 脚本批量处理
+
+```bash
+# 将虚幻导出的 .txt 文件放入脚本同级目录
+python extract_material_params.py
+
+# 按提示选择文件 → 选择输出格式（TXT / Markdown / HTML）→ 完成
+```
+
+脚本会自动扫描当前目录下的 `.txt` 文件，提取参数后输出到同级目录。
+
+## GitHub Pages 在线预览
+
+本仓库已配置 GitHub Pages，可直接在线访问：
+
+👉 **[点击在线预览](https://iZerat.github.io/extract_material_params/extract_material_params.html)**
+
+## 截图展示
+
 ![extract_material_params.png](https://cdn.jsdelivr.net/gh/iZerat/resource@master/extract_material_params.png)
