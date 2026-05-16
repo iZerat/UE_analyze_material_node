@@ -719,11 +719,11 @@ def generate_pseudo_code(nodes):
     if m:
         mat_name = m.group(1).split('.')[-1]
 
+    from datetime import datetime
     lines = []
     lines.append(f'================================================================================')
     lines.append(f'{mat_name} 材质节点运算伪代码')
     lines.append(f'源文件: {mat_name}.txt')
-    from datetime import datetime
     lines.append(f'生成日期: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}')
     lines.append(f'================================================================================')
     lines.append('')
@@ -762,48 +762,51 @@ def find_txt_files():
 
 
 def select_file(files):
-    """交互式选择文件"""
+    """交互式选择文件，显示文件大小"""
     if not files:
         print('[错误] 当前目录下没有找到 .txt 文件。')
         return None
 
-    print('\n发现以下 .txt 文件：')
-    display_count = min(9, len(files))
-    for i in range(display_count):
-        print(f'  [{i + 1}] {files[i]}')
+    print('\n' + '=' * 60)
+    print('找到以下 .txt 文件:')
+    print('=' * 60)
+
+    for i, filepath in enumerate(files, start=1):
+        filename = os.path.basename(filepath)
+        file_size = os.path.getsize(filepath)
+        size_kb = file_size / 1024
+        print(f'  [{i}] {filename} ({size_kb:.1f} KB)')
 
     if len(files) > 9:
-        print(f'\n[提示] 目录下共有 {len(files)} 个 .txt 文件，仅显示前 9 个。')
-        print('       如需处理其他文件，可直接输入完整文件名，或整理后重新运行。')
+        print(f'\n提示: 共有 {len(files)} 个文件，请输入对应的编号')
 
     while True:
-        choice = input(f'\n请选择 (1-{display_count}) 或直接输入文件名: ').strip()
-        # 尝试数字选择
         try:
-            idx = int(choice) - 1
-            if 0 <= idx < display_count:
-                return files[idx]
-            else:
-                print('序号超出范围，请重新输入。')
+            choice = input(f'\n请输入要处理的文件编号 [1-{len(files)}]: ').strip()
+            if not choice:
+                print('请输入编号')
                 continue
+            idx = int(choice)
+            if 1 <= idx <= len(files):
+                return files[idx - 1]
+            else:
+                print(f'编号超出范围，请输入 1 到 {len(files)} 之间的数字')
         except ValueError:
-            pass
-
-        # 尝试作为文件名
-        if os.path.exists(choice):
-            return choice
-        else:
-            print(f'文件 "{choice}" 不存在，请重新输入。')
+            print('输入无效，请输入数字编号')
+        except KeyboardInterrupt:
+            print('\n已取消')
+            return None
 
 
 def check_overwrite(output_path):
     """检查输出文件是否存在并询问是否覆盖"""
     if os.path.exists(output_path):
+        print(f'\n文件已存在: {os.path.basename(output_path)}')
         while True:
-            ans = input(f'\n文件 "{output_path}" 已存在，是否覆盖? (y/n): ').strip().lower()
+            ans = input('是否覆盖？(y/n): ').strip().lower()
             if ans in ('y', 'yes', '是'):
                 return True
-            elif ans in ('n', 'no', '否'):
+            elif ans in ('n', 'no', '否', ''):
                 return False
             else:
                 print('请输入 y 或 n')
@@ -825,10 +828,10 @@ def main():
     output_path = f'{base_name}_material_node_pseudo.txt'
 
     if not check_overwrite(output_path):
-        print('已取消，未写入文件。')
+        print('操作已取消')
         sys.exit(0)
 
-    print(f'\n正在解析: {filepath} ...')
+    print(f'\n正在解析: {os.path.basename(filepath)} ...')
     try:
         with open(filepath, 'r', encoding='utf-8') as f:
             text = f.read()
@@ -846,11 +849,10 @@ def main():
     try:
         with open(output_path, 'w', encoding='utf-8') as f:
             f.write(pseudo_code)
-        print('
-' + '=' * 60)
-    print('完成！')
-    print(f'伪代码已保存到: {output_path}')
-    print('=' * 60)
+        print('\n' + '=' * 60)
+        print('完成！')
+        print(f'伪代码已保存到: {output_path}')
+        print('=' * 60)
     except Exception as e:
         print(f'[错误] 写入文件失败: {e}')
         sys.exit(1)
