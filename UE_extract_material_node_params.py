@@ -2,6 +2,10 @@
 """
 虚幻材质参数提取工具
 支持提取材质参数并输出为 TXT、Markdown 或 HTML 格式
+
+Copyright (c) 2026 iZerat
+License: MIT
+GitHub: https://github.com/iZerat/UE_analyze_material_node
 """
 
 import re

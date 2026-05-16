@@ -3,6 +3,10 @@
 """
 ue_material_parser.py
 从虚幻引擎材质编辑器复制出的纯文本中提取节点运算关系，生成伪代码。
+
+Copyright (c) 2026 iZerat
+License: MIT
+GitHub: https://github.com/iZerat/UE_analyze_material_node
 """
 
 import os
