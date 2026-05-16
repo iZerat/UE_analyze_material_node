@@ -4,6 +4,9 @@
 
 > ⚠️ 虚幻材质资产本身是 `.uasset` 二进制文件，无法直接读取，须通过虚幻引擎编辑器复制节点获取纯文本内容。
 
+## GitHub Pages 在线预览
+👉 **[点击在线预览](https://izerat.github.io/UE_analyze_material_node/UE_extract_material_node_params.html)**（仅支持参数统计功能，节点运算关系提取需要python脚本）
+
 ## 功能特性
 
 ### 1. 参数提取与可视化
@@ -100,10 +103,6 @@ python UE_extract_material_node_math.py
 - NamedReroute 变量声明
 - 材质输出赋值（BaseColor、Metallic、Roughness 等）
 - 完整的运算树（含分支节点、材质函数调用）
-
-## GitHub Pages 在线预览
-
-👉 **[点击在线预览](https://izerat.github.io/UE_analyze_material_node/UE_extract_material_node_params.html)**（仅支持参数统计功能，节点运算关系提取需要python脚本）
 
 ## 参数提取网页截图展示
 ![UE_extract_material_node.png](https://cdn.jsdelivr.net/gh/iZerat/resource@master/UE_extract_material_node.png)
