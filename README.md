@@ -23,7 +23,7 @@
 - **分支节点处理**：正确处理 StaticSwitchParameter、StaticSwitch、Switch、Lerp、ShadingPathSwitch 等分支/选择节点
 - **材质函数展开**：完整展开 MaterialFunctionCall 的输入输出关系
 - **伪代码生成**：将节点连接关系转换为人类可读的伪代码，便于分析材质计算逻辑
-- **NamedReroute 支持**：将 NamedRerouteDeclaration 提取为变量声明，使用时以变量名引用
+- **命名重路由声明节点支持**：将 NamedRerouteDeclaration 提取为变量声明，使用时以变量名引用
 
 ## 文件说明
 
@@ -99,7 +99,7 @@ python UE_extract_material_node_math.py
 ```
 
 脚本会自动扫描当前目录下的 `.txt` 文件，解析节点运算关系后输出 `{base_name}_material_node_pseudocode.txt`，包含：
-- NamedReroute 变量声明
+- 命名重路由声明节点
 - 材质输出赋值（BaseColor、Metallic、Roughness 等）
 - 完整的运算树（含分支节点、材质函数调用）
 
