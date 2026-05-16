@@ -1019,6 +1019,26 @@ def main():
     if input_file is None:
         return
 
+    # 检测文件是否符合 UE 材质复制文本格式
+    print(f"\n正在检测文件格式: {os.path.basename(input_file)} ...")
+    try:
+        with open(input_file, 'r', encoding='utf-8') as f:
+            lines = []
+            for _ in range(10):
+                line = f.readline()
+                if not line:
+                    break
+                lines.append(line)
+        sample = ''.join(lines)
+    except Exception as e:
+        print(f'[错误] 读取文件失败: {e}')
+        return
+
+    if 'Begin Object' not in sample and 'CustomProperties' not in sample:
+        print('[错误] 文件不符合 UE 材质复制文本格式。')
+        print('       请确保文件是从 UE 材质编辑器复制粘贴生成的文本。')
+        return
+    print('文件格式检测通过。')
     # 询问输出格式
     output_format = select_output_format()
     if output_format is None:

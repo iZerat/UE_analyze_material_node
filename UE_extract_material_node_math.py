@@ -827,6 +827,26 @@ def main():
     if not filepath:
         sys.exit(1)
 
+    # 检测文件是否符合 UE 材质复制文本格式
+    print(f'\n正在检测文件格式: {os.path.basename(filepath)} ...')
+    try:
+        with open(filepath, 'r', encoding='utf-8') as f:
+            lines = []
+            for _ in range(10):
+                line = f.readline()
+                if not line:
+                    break
+                lines.append(line)
+        sample = ''.join(lines)
+    except Exception as e:
+        print(f'[错误] 读取文件失败: {e}')
+        sys.exit(1)
+
+    if 'Begin Object' not in sample and 'CustomProperties' not in sample:
+        print('[错误] 文件不符合 UE 材质复制文本格式。')
+        print('       请确保文件是从 UE 材质编辑器复制粘贴生成的文本。')
+        sys.exit(1)
+    print('文件格式检测通过。')
     # 生成输出文件名
     base_name = os.path.splitext(os.path.basename(filepath))[0]
     output_path = f'{base_name}_material_node_pseudocode.txt'
