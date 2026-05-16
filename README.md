@@ -67,7 +67,7 @@
 
 python UE_extract_material_node_params.py
 
-# 按提示选择文件 → 选择输出格式（TXT / Markdown / HTML）→ 完成
+# 按提示选择文件 → 检测目标文件是否符合格式 → 选择输出格式（TXT / Markdown / HTML）→ 确认覆盖 →完成
 ```
 
 脚本会自动扫描当前目录下的 `.txt` 文件，提取参数后输出到同级目录，文件名格式为：
@@ -95,7 +95,7 @@ python UE_extract_material_node_params.py
 
 python UE_extract_material_node_math.py
 
-# 按提示选择文件 → 确认覆盖 → 完成
+# 按提示选择文件 → 检测目标文件是否符合格式 → 确认覆盖 → 完成
 ```
 
 脚本会自动扫描当前目录下的 `.txt` 文件，解析节点运算关系后输出 `{base_name}_material_node_pseudocode.txt`，包含：
